@@ -1,0 +1,41 @@
+{
+  "name": "jarvis",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npx concurrently -k -n agent,ui \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:client": "npx vite --host 127.0.0.1",
+    "dev:server": "node server/agent-server.js",
+    "build": "npx tsc -b; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; npx vite build",
+    "lint": "npx eslint .",
+    "preview": "npx vite preview"
+  },
+  "dependencies": {
+    "@google/genai": "^2.6.0",
+    "@langchain/core": "^1.1.48",
+    "@langchain/google-genai": "^2.1.31",
+    "@vitejs/plugin-react": "latest",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "langchain": "^1.4.2",
+    "mathjs": "^15.2.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "typescript": "latest",
+    "vite": "latest",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "concurrently": "^9.2.1",
+    "eslint": "latest",
+    "eslint-plugin-react-hooks": "latest",
+    "eslint-plugin-react-refresh": "latest",
+    "globals": "latest",
+    "typescript-eslint": "latest"
+  }
+}

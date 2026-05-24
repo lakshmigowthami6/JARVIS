@@ -1,0 +1,11 @@
+node_modules
+dist
+dist-ssr
+.npm-cache
+Microsoft
+*.log
+*.local
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
