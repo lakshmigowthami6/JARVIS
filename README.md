@@ -1,8 +1,8 @@
 # JARVIS
 
-A J.A.R.V.I.S-inspired AI chat interface built with React, TypeScript, Vite, Gemini 2.5 Flash, and LangChain.
+JARVIS is an AI agent chat interface built with React, TypeScript, Vite, Gemini 2.5 Flash, and LangChain.
 
-The app has a cinematic animated background, a minimal chat UI, and a Node.js LangChain agent server that can call tools.
+The app has a cinematic animated background, a minimal chat UI, and a Node.js LangChain agent server that knows its name is JARVIS and can call tools.
 
 ## Features
 

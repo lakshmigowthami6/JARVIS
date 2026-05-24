@@ -111,7 +111,7 @@ function buildAgent() {
     model,
     tools: [calculatorTool, currentTimeTool, wikipediaTool],
     prompt:
-      'You are J.A.R.V.I.S, a concise, practical AI agent. Use tools when they help with math, current time, or factual lookup. Do not mention internal tool calls unless useful to the user.',
+      'Your name is JARVIS. You may also recognize the stylized spelling J.A.R.V.I.S, but when asked your name, say that you are JARVIS. You are a concise, practical AI agent. Use tools when they help with math, current time, or factual lookup. Do not mention internal tool calls unless useful to the user.',
   })
 }
 
@@ -144,6 +144,7 @@ function contentToText(content) {
 app.get('/api/health', (_request, response) => {
   response.json({
     ok: true,
+    name: 'JARVIS',
     model: 'gemini-2.5-flash',
     tools: ['calculator', 'current_time', 'wikipedia_lookup'],
   })
@@ -173,5 +174,5 @@ app.post('/api/chat', async (request, response) => {
 })
 
 app.listen(port, () => {
-  console.log(`J.A.R.V.I.S agent server listening on http://127.0.0.1:${port}`)
+  console.log(`JARVIS agent server listening on http://127.0.0.1:${port}`)
 })
