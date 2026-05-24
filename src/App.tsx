@@ -14,6 +14,7 @@ function App() {
   const [prompt, setPrompt] = useState('')
   const [isSending, setIsSending] = useState(false)
   const [error, setError] = useState('')
+  const [voiceEnabled, setVoiceEnabled] = useState(true)
 
   const canSend = prompt.trim().length > 0 && !isSending
 
@@ -24,6 +25,36 @@ function App() {
       ? ''
       : 'Add VITE_GEMINI_API_KEY to .env to enable Gemini responses.'
   }, [error, isSending])
+
+  function speak(text: string) {
+    if (!voiceEnabled || !('speechSynthesis' in window)) return
+
+    window.speechSynthesis.cancel()
+
+    const utterance = new SpeechSynthesisUtterance(text)
+    const voices = window.speechSynthesis.getVoices()
+    const preferredVoice =
+      voices.find((voice) => voice.lang.startsWith('en') && voice.name.includes('Google')) ??
+      voices.find((voice) => voice.lang.startsWith('en')) ??
+      null
+
+    utterance.voice = preferredVoice
+    utterance.rate = 0.92
+    utterance.pitch = 0.82
+    utterance.volume = 1
+
+    window.speechSynthesis.speak(utterance)
+  }
+
+  function toggleVoice() {
+    setVoiceEnabled((enabled) => {
+      if (enabled && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel()
+      }
+
+      return !enabled
+    })
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -42,6 +73,7 @@ function App() {
     try {
       const answer = await askGemini(nextMessages)
       setMessages((current) => [...current, createMessage('model', answer)])
+      speak(answer)
     } catch (caughtError) {
       const message =
         caughtError instanceof Error
@@ -75,8 +107,14 @@ function App() {
         </div>
 
         <form className="prompt-box" onSubmit={handleSubmit}>
-          <button className="plus-button" type="button" aria-label="Add attachment">
-            +
+          <button
+            className={`voice-button ${voiceEnabled ? 'is-on' : ''}`}
+            type="button"
+            aria-label={voiceEnabled ? 'Mute spoken responses' : 'Speak responses'}
+            title={voiceEnabled ? 'Mute spoken responses' : 'Speak responses'}
+            onClick={toggleVoice}
+          >
+            {voiceEnabled ? 'Voice' : 'Mute'}
           </button>
           <label className="sr-only" htmlFor="prompt">
             Ask Jarvis
